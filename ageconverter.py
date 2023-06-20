@@ -83,6 +83,7 @@ def check_birthday_with_today_date(y, m, d):
         amount_days.append(int(days["days"]))
 
     amount_days = sum(amount_days) - (int(amount_days.pop()) - int(d))
+    #calculate for leap years
     if (int(date_year) - int(y)) > 4:
         return (
             f"{float((int(date_year) - int(y) - 1) * 365.25 + (365 - amount_days + find_days_in_current_year()))} days old\n"
@@ -100,7 +101,7 @@ def check_birthday_with_today_date(y, m, d):
         )
 
 
-# convert the amount of years to days and find out how many days old at this moment
+# convert the number of years to days and find out how many days old at this moment
 # do the same with months and weeks too
 
 
