@@ -22,8 +22,6 @@ months = [
 # find the date and time for today
 date, time = str(datetime.datetime.now()).split(" ")
 date_year, date_month, date_day = date.split("-")
-# ask for birthday with or without year
-
 
 def main():
     while True:
@@ -33,18 +31,16 @@ def main():
         except ValueError:
             print("Not the right format")
         else:
-            print(convert_birthday(birthday))
+            print(check_birthday_with_today_date(convert_birthday(birthday)))
             break
 
-
-# convert the input into the correct format which is yyyy-mm-dd
-
+# check for valid birthdates and 
 
 def convert_birthday(birthdate):
     if "/" in birthdate and len(birthdate.split("/")) == 3:
         year, month, day = birthdate.split("/")
         if (
-            len(year) != 4
+            len(year) < 4
             or int(year) > int(date_year)
             or int(month) > 12
             or int(day) > 31
@@ -59,7 +55,7 @@ def convert_birthday(birthdate):
     else:
         raise ValueError
 
-    return check_birthday_with_today_date(year, month, day)
+    return (year, month, day)
 
 
 # if today's date equals birthday find out the year of birthday
@@ -81,9 +77,14 @@ def check_birthday_with_today_date(y, m, d):
 
     for days in amount_months:
         amount_days.append(int(days["days"]))
-
+    
+    #counts every day in the year until your birthday by adding every day in each month stopping at your birth month
+    #then it subtracts by the number of days in your birth month minus your birthday number; e.g Jan 5 = 31 - (31 - 5)
     amount_days = sum(amount_days) - (int(amount_days.pop()) - int(d))
+    
     #calculate for leap years
+    # convert the number of years to days and find out how many days old at this moment
+    # do the same with months and weeks too
     if (int(date_year) - int(y)) > 4:
         return (
             f"{float((int(date_year) - int(y) - 1) * 365.25 + (365 - amount_days + find_days_in_current_year()))} days old\n"
@@ -99,11 +100,6 @@ def check_birthday_with_today_date(y, m, d):
             f"{(int(date_year) - int(y)) * 12 - (int(m) - int(date_month)) + round((int(date_day) - int(d)) / 30.437, 3)} months old\n"
             f"{round(int(date_year) - int(y) - 1 + (365 - amount_days + find_days_in_current_year())/365,3)} years old"
         )
-
-
-# convert the number of years to days and find out how many days old at this moment
-# do the same with months and weeks too
-
 
 if __name__ == "__main__":
     main()
