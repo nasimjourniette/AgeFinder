@@ -50,6 +50,7 @@ def convert_birthday(birthdate):
             month = month.zfill(2)
         if len(day) == 1:
             day = day.zfill(2)
+        
     elif birthdate.isalnum() is False:
         raise ValueError
     else:
@@ -62,7 +63,8 @@ def convert_birthday(birthdate):
 # else find how many days are in between the date and the birthday
 
 
-def check_birthday_with_today_date(y, m, d):
+def check_birthday_with_today_date(birthday):
+    y, m, d = birthday[0], birthday[1], birthday[2]
     if m == date_month and d == date_day:
         return (
             f"{(int(date_year) - int(y)) * 365.25} days old\n"
